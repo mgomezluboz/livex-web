@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Espectaculo } from '../model/espectaculo';
 import { Funcion } from '../model/funcion';
 import { Establecimiento } from '../model/establecimiento';
+import { EspectaculosService } from '../espectaculos.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-listado-espectaculos',
@@ -12,21 +14,15 @@ export class ListadoEspectaculosComponent implements OnInit {
 
   espectaculos: Espectaculo[];
 
-  constructor() { 
-    this.espectaculos = [];
+  constructor(private especService: EspectaculosService, private router: Router) { 
   }
 
   ngOnInit() {
+    this.especService.getEspectaculos().subscribe(espec => this.espectaculos = espec);
+  }
 
-    let fecha1: Funcion = new Funcion(new Date(), "Nirvana", new Establecimiento("Auditorio Sur"));
-    let lolla: Espectaculo = new Espectaculo("Lollapalooza");
-    let personalFest: Espectaculo = new Espectaculo("Personal Fest");
-
-    lolla.addFuncion(fecha1);
-    personalFest.addFuncion(fecha1);
-
-    this.addEspectaculo(lolla);
-    this.addEspectaculo(personalFest);
+  goTo(e: Espectaculo) {
+    this.router.navigate(['/espectaculos/edit'], {queryParams:{id:e.id}});
   }
 
   addEspectaculo(e: Espectaculo):void {

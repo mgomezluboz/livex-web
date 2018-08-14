@@ -1,0 +1,20 @@
+<h2>Establecimiento:</h2>
+<form>
+<mat-form-field appearance="outline">
+  <mat-label>Nombre</mat-label>
+  <input matInput placeholder="Nombre" [(ngModel)]="establecimiento.nombre" name="nombre">
+</mat-form-field>
+<br>
+<mat-form-field appearance="outline">
+  <mat-label>Direccion</mat-label>
+  <input matInput placeholder="Direccion" [(ngModel)]="establecimiento.direccion" name="direccion">
+</mat-form-field>
+<br>
+<mat-form-field appearance="outline">
+  <mat-label>Capacidad</mat-label>
+  <input matInput placeholder="Capacidad" type="number" [(ngModel)]="establecimiento.capacidad" name="capacidad">
+</mat-form-field>
+<br>
+<button mat-button (click)="saveEstablecimiento()" style="background-color: blue; color: white">Guardar cambios</button>
+<button mat-button (click)="goBack()" style="background-color: blue; color: white">Volver</button>
+</form>

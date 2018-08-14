@@ -1,12 +1,13 @@
 import { Funcion } from "./funcion";
+import { Establecimiento } from "./establecimiento";
 
 export class Espectaculo {
-    id: number;
+    id: string;
     nombre: string;
     funciones: Funcion[];
+    establecimiento: Establecimiento;
 
-    constructor(n: string) {
-        this.nombre = n;
+    constructor() {
         this.funciones = [];
     }
 
