@@ -8,7 +8,7 @@ import { ListadoEspectaculosComponent } from './listado-espectaculos/listado-esp
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { LayoutModule } from '@angular/cdk/layout';
-import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule, MatFormField, MatFormFieldModule, MatInputModule, MatTableModule, MatSelectModule } from '@angular/material';
+import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule, MatFormField, MatFormFieldModule, MatInputModule, MatTableModule, MatSelectModule, MatDatepickerModule, MatCardModule, MatNativeDateModule } from '@angular/material';
 import { ListadoEstablecimientosComponent } from './listado-establecimientos/listado-establecimientos.component';
 import { AppRoutingModule } from './/app-routing.module';
 import { CrearEstablecimientoComponent } from './crear-establecimiento/crear-establecimiento.component';
@@ -38,7 +38,10 @@ import { CrearEspectaculoComponent } from './crear-espectaculo/crear-espectaculo
     MatFormFieldModule,
     MatInputModule,
     MatTableModule,
-    MatSelectModule
+    MatSelectModule,
+    MatDatepickerModule,
+    MatCardModule,
+    MatNativeDateModule
   ],
   providers: [],
   bootstrap: [AppComponent]

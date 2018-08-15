@@ -19,7 +19,7 @@ export class CrearEspectaculoComponent implements OnInit {
   espectaculo: Espectaculo;
   selectedEstab: string;
   establecimientos: Establecimiento[];
-  columnsToDisplay = ['fechaHora', 'artista']
+  displayedColumns: string[] = ['fechaHora', 'artista']
 
   constructor(private especService: EspectaculosService, private location: Location, private route: ActivatedRoute, private estabService: EstablecimientosService) { }
 
@@ -29,21 +29,35 @@ export class CrearEspectaculoComponent implements OnInit {
     this.estabService.getEstablecimientos().subscribe(estab => this.establecimientos=estab);
 
     if(this.idParam) {
-      this.especService.getEspectaculoById(this.idParam).subscribe(estab => {this.espectaculo = estab; this.funciones = this.espectaculo.funciones; this.selectedEstab = this.espectaculo.establecimiento.id;});
+      this.especService.getEspectaculoById(this.idParam).subscribe(estab => {this.espectaculo = estab; this.espectaculo.funciones.forEach(func => func.fecha = new Date(func.fecha)); this.funciones = this.espectaculo.funciones; this.selectedEstab = this.espectaculo.establecimiento.id;});
     } else {
       this.espectaculo = new Espectaculo();
-      this.funciones = [];
+      let func = new Funcion();
+      func.fecha = new Date();
+      this.espectaculo.funciones = [func];
     }
 
   }
   saveEspectaculo(): void {
-    /*if(this.idParam) {
+    this.espectaculo.establecimiento = this.establecimientos.find(e => e.id == this.selectedEstab);
+    if(this.idParam) {
       this.especService.putEspectaculo(this.espectaculo).subscribe(() => this.goBack());
     } else {
       this.especService.postEspectaculo(this.espectaculo).subscribe(() => this.goBack());
-    }*/
-    this.espectaculo.establecimiento = this.establecimientos.find(estab => estab.id == this.selectedEstab);
-    console.info("Info de esta: " + this.espectaculo.establecimiento.id + " con nombre " + this.espectaculo.establecimiento.nombre);
+    }
+  }
+
+  addFuncion(): void {
+    let func = new Funcion();
+    func.fecha = new Date();
+    this.funciones.push(func);
+  }
+
+  deleteFuncion(f: Funcion): void {
+    const index: number = this.funciones.indexOf(f);
+    if(index !== -1) {
+      this.funciones.splice(index, 1);
+    }
   }
 
   goBack(): void {

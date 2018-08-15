@@ -1,34 +1,36 @@
 <h2>Espectaculo:</h2>
 
-<div>
-<table mat-table [dataSource]="espectaculo.funciones">    
-  <ng-container matColumnDef="fechaHora">
-    <th mat-header-cell *matHeaderCellDef> Fecha y Hora </th>
-    <td mat-cell *matCellDef="let row"> {{row.fechaHora | date:'dd-MM-yyyy HH:mm'}} </td>
-  </ng-container>
-  <ng-container matColumnDef="artista">
-    <th mat-header-cell *matHeaderCellDef> Artista </th>
-    <td mat-cell *matCellDef="let row"> {{row.artista}} </td>
-  </ng-container>
-
-  <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-  <tr mat-row *matRowDef="let row; columns: columnsToDisplay"></tr>
-</table>
-</div>
-
 <form>
-<mat-form-field appearance="outline">
-  <mat-label>Nombre</mat-label>
-  <input matInput placeholder="Nombre" [(ngModel)]="espectaculo.nombre" name="nombre">
-</mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Nombre</mat-label>
+      <input matInput placeholder="Nombre" [(ngModel)]="espectaculo.nombre" name="nombre">
+    </mat-form-field>
+    <br>
+    <mat-form-field appearance="outline">
+        <mat-label>Establecimiento</mat-label>
+        <mat-select [(ngModel)]="selectedEstab" name="establecimiento">
+          <mat-option *ngFor="let estab of establecimientos" value="{{estab.id}}">{{estab.nombre}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    <br>
+    </form>
+
+<div *ngFor="let funcion of espectaculo.funciones">
+<mat-card>
+    <mat-form-field appearance="outline">
+      <input matInput [matDatepicker]="picker" placeholder="Fecha y hora de funcion" [(ngModel)]="funcion.fecha" name="fecha">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+        <mat-label>Artista</mat-label>
+        <input matInput placeholder="Artista" [(ngModel)]="funcion.artista" name="artista">
+    </mat-form-field>
+    <button mat-button (click)="deleteFuncion(funcion)" style="background-color: red; color: white">X</button>
+</mat-card>
+</div>
 <br>
-<mat-form-field appearance="outline">
-    <mat-label>Establecimiento</mat-label>
-    <mat-select [(ngModel)]="selectedEstab" name="establecimiento">
-      <mat-option *ngFor="let estab of establecimientos" value="{{estab.id}}">{{estab.nombre}}</mat-option>
-    </mat-select>
-  </mat-form-field>
-<br>
+<button mat-button (click)="addFuncion()" style="background-color: blue; color: white">Agregar funcion</button>
+<br><br>
 <button mat-button (click)="saveEspectaculo()" style="background-color: blue; color: white">Guardar cambios</button>
 <button mat-button (click)="goBack()" style="background-color: blue; color: white">Volver</button>
-</form>

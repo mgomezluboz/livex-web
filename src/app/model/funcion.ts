@@ -2,7 +2,7 @@ import { Establecimiento } from "./establecimiento";
 
 export class Funcion {
     id: string;
-    fechaHora: Date;
+    fecha: Date;
     artista: string;
 
     constructor() {
