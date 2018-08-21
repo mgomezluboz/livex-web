@@ -9,7 +9,8 @@ import { Espectaculo } from './model/espectaculo';
 })
 export class EspectaculosService {
 
-  baseIp = "http://192.168.0.86:8080/espectaculos";
+  //baseIp = "http://192.168.0.86:8080/espectaculos";
+  baseIp = "http://127.0.0.1:8080/espectaculos";
 
   constructor(private http: HttpClient) { }
 

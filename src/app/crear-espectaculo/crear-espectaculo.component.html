@@ -1,15 +1,15 @@
 <h2>Espectaculo:</h2>
 
 <form>
-    <mat-form-field appearance="outline">
+    <mat-form-field appearance="outline" style="width: 25%;">
       <mat-label>Nombre</mat-label>
-      <input matInput placeholder="Nombre" [(ngModel)]="espectaculo.nombre" name="nombre">
+      <input matInput placeholder="Nombre" [(ngModel)]="espectaculo.nombre" name="nombre" style="text-align: center">
     </mat-form-field>
     <br>
-    <mat-form-field appearance="outline">
+    <mat-form-field appearance="outline" style="width: 25%;">
         <mat-label>Establecimiento</mat-label>
-        <mat-select [(ngModel)]="selectedEstab" name="establecimiento">
-          <mat-option *ngFor="let estab of establecimientos" value="{{estab.id}}">{{estab.nombre}}</mat-option>
+        <mat-select [(ngModel)]="selectedEstab" name="establecimiento" style="text-align: center">
+          <mat-option *ngFor="let estab of establecimientos" value="{{estab.id}}" style="text-align: center">{{estab.nombre}}</mat-option>
         </mat-select>
       </mat-form-field>
     <br>
@@ -18,13 +18,13 @@
 <div *ngFor="let funcion of espectaculo.funciones">
 <mat-card>
     <mat-form-field appearance="outline">
-      <input matInput [matDatepicker]="picker" placeholder="Fecha y hora de funcion" [(ngModel)]="funcion.fecha" name="fecha">
+      <input matInput [matDatepicker]="picker" placeholder="Fecha y hora de funcion" [(ngModel)]="funcion.fecha" name="fecha" style="text-align: center">
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
     <mat-form-field appearance="outline">
         <mat-label>Artista</mat-label>
-        <input matInput placeholder="Artista" [(ngModel)]="funcion.artista" name="artista">
+        <input matInput placeholder="Artista" [(ngModel)]="funcion.artista" name="artista" style="text-align: center">
     </mat-form-field>
     <button mat-button (click)="deleteFuncion(funcion)" style="background-color: red; color: white">X</button>
 </mat-card>

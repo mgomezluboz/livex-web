@@ -35,6 +35,7 @@ export class CrearEspectaculoComponent implements OnInit {
       let func = new Funcion();
       func.fecha = new Date();
       this.espectaculo.funciones = [func];
+      this.funciones = this.espectaculo.funciones;
     }
 
   }

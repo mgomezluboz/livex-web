@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { ListadoEspectaculosComponent } from './listado-espectaculos/listado-espectaculos.component';
@@ -13,6 +13,9 @@ import { ListadoEstablecimientosComponent } from './listado-establecimientos/lis
 import { AppRoutingModule } from './/app-routing.module';
 import { CrearEstablecimientoComponent } from './crear-establecimiento/crear-establecimiento.component';
 import { CrearEspectaculoComponent } from './crear-espectaculo/crear-espectaculo.component';
+import { ErrorInterceptor } from './interceptors/error.interceptor';
+import { LoginComponent } from './login/login.component';
+import { JwtInterceptor } from './interceptors/jwt.interceptor';
 
 @NgModule({
   declarations: [
@@ -21,7 +24,8 @@ import { CrearEspectaculoComponent } from './crear-espectaculo/crear-espectaculo
     NavBarComponent,
     ListadoEstablecimientosComponent,
     CrearEstablecimientoComponent,
-    CrearEspectaculoComponent
+    CrearEspectaculoComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -41,9 +45,14 @@ import { CrearEspectaculoComponent } from './crear-espectaculo/crear-espectaculo
     MatSelectModule,
     MatDatepickerModule,
     MatCardModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

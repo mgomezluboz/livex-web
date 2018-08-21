@@ -10,7 +10,8 @@ import { TouchSequence } from 'selenium-webdriver';
 })
 export class EstablecimientosService {
 
-  baseIp = "http://192.168.0.86:8080/establecimientos";
+  //baseIp = "http://192.168.0.86:8080/establecimientos";
+  baseIp = "http://127.0.0.1:8080/establecimientos";
 
   constructor(private http: HttpClient) { }
 

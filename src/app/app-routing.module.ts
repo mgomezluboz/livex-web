@@ -4,13 +4,15 @@ import { ListadoEspectaculosComponent } from './listado-espectaculos/listado-esp
 import { ListadoEstablecimientosComponent } from './listado-establecimientos/listado-establecimientos.component';
 import { CrearEstablecimientoComponent } from './crear-establecimiento/crear-establecimiento.component';
 import { CrearEspectaculoComponent } from './crear-espectaculo/crear-espectaculo.component';
+import { LoginComponent } from './login/login.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/espectaculos', pathMatch: 'full' },
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'espectaculos', component: ListadoEspectaculosComponent },
   { path: 'establecimientos', component: ListadoEstablecimientosComponent },
   { path: 'establecimientos/edit', component: CrearEstablecimientoComponent },
-  { path: 'espectaculos/edit', component: CrearEspectaculoComponent }
+  { path: 'espectaculos/edit', component: CrearEspectaculoComponent },
+  { path: 'login', component: LoginComponent }
 ];
 
 @NgModule({
