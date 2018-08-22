@@ -26,11 +26,11 @@
         <mat-label>Artista</mat-label>
         <input matInput placeholder="Artista" [(ngModel)]="funcion.artista" name="artista" style="text-align: center">
     </mat-form-field>
-    <button mat-button (click)="deleteFuncion(funcion)" style="background-color: red; color: white">X</button>
+    <button mat-button (click)="deleteFuncion(funcion)" style="background-color: red;">X</button>
 </mat-card>
 </div>
 <br>
-<button mat-button (click)="addFuncion()" style="background-color: blue; color: white">Agregar funcion</button>
+<button mat-button (click)="addFuncion()">Agregar funcion</button>
 <br><br>
-<button mat-button (click)="saveEspectaculo()" style="background-color: blue; color: white">Guardar cambios</button>
-<button mat-button (click)="goBack()" style="background-color: blue; color: white">Volver</button>
+<button mat-button (click)="saveEspectaculo()">Guardar cambios</button>
+<button mat-button (click)="goBack()">Volver</button>

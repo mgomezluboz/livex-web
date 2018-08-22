@@ -1,4 +1,3 @@
-<button mat-button routerLink="/establecimientos/edit" style="background-color: blue; color: white">Nuevo establecimiento</button>
 <mat-list>
   <mat-list-item *ngFor="let establecimiento of establecimientos">
     <a matLine (click)="goTo(establecimiento)"><h2> {{establecimiento.nombre}} </h2></a>
@@ -6,3 +5,4 @@
     <p matLine> Capacidad: {{establecimiento.capacidad}} </p>
   </mat-list-item>
 </mat-list>
+<button mat-button routerLink="/establecimientos/edit">Nuevo establecimiento</button>

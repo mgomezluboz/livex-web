@@ -13,10 +13,20 @@ export class AuthService {
   private loggedIn = new BehaviorSubject<boolean>(false);
   private username = new BehaviorSubject<string>("");
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient, private router: Router) { 
+    if(localStorage.getItem('username')) {
+      this.loggedIn.next(true);
+      this.username.next(localStorage.getItem('username'));
+    }
+  }
+
+  ngOnInit(): void {
+    
+  }
 
   logout() {
     localStorage.removeItem('currentUser');
+    localStorage.removeItem('username');
     this.loggedIn.next(false);
     this.username.next("");
     this.router.navigate(["login"]);
@@ -37,6 +47,7 @@ export class AuthService {
         if (user && user.token) {
             // store user details and jwt token in local storage to keep user logged in between page refreshes
             localStorage.setItem('currentUser', JSON.stringify(user));
+            localStorage.setItem('username', username);
             this.loggedIn.next(true);
             this.username.next(username);
             return user;

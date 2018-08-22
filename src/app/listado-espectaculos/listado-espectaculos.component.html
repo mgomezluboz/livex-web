@@ -1,7 +1,7 @@
-<button mat-button routerLink="/espectaculos/edit" style="background-color: blue; color: white">Nuevo espectaculo</button>
 <mat-list>
   <mat-list-item *ngFor="let espectaculo of espectaculos">
     <a matLine (click)="goTo(espectaculo)"><h1> {{espectaculo.nombre}} </h1></a>
     <p matLine> Establecimiento: {{espectaculo.establecimiento.nombre}} </p>
   </mat-list-item>
 </mat-list>
+<button mat-button routerLink="/espectaculos/edit">Nuevo espectaculo</button>
