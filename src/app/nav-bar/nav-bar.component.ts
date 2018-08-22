@@ -3,6 +3,7 @@ import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/l
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AuthService } from '../auth.service';
+import { User } from '../model/usuario';
 
 @Component({
   selector: 'app-nav-bar',
@@ -11,7 +12,7 @@ import { AuthService } from '../auth.service';
 })
 export class NavBarComponent {
 
-  isLoggedIn$: boolean = false;
+  isLoggedIn$: Observable<boolean>;
   username$: Observable<string>;
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
@@ -21,14 +22,13 @@ export class NavBarComponent {
     
   constructor(private breakpointObserver: BreakpointObserver, private authService: AuthService) {}
 
-  logout(): void {
-    this.isLoggedIn$ = true;
-    this.authService.logout();
+  ngOnInit(): void {
+    this.isLoggedIn$ = this.authService.isLoggedIn;
+    this.username$ = this.authService.getUsername;
   }
 
-  fillData(user) {
-    this.isLoggedIn$ = true;
-
+  logout(): void {
+    this.authService.logout();
   }
   
   }
