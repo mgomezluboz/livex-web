@@ -3,6 +3,7 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { throwError, Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Espectaculo } from './model/espectaculo';
+import { AlertService } from './alert.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ export class EspectaculosService {
   //baseIp = "http://192.168.0.86:8080/espectaculos";
   baseIp = "http://127.0.0.1:8080/espectaculos";
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private alertService: AlertService) { }
 
   getEspectaculos(): Observable<Espectaculo[]> {
     return this.http.get<Espectaculo[]>(this.baseIp).pipe(catchError(this.handleError));
@@ -30,7 +31,7 @@ export class EspectaculosService {
 
   putEspectaculo(e: Espectaculo):Observable<any> {
     const httpOptions = { headers: new HttpHeaders({'Content-Type': 'application/json'}) };
-    return this.http.put(this.baseIp, e, httpOptions).pipe(catchError(this.handleError));
+    return this.http.put(this.baseIp, e, httpOptions);//.pipe(catchError(this.handleError));
   }
 
   deleteEspectaculo(id: string):Observable<any> {

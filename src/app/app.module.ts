@@ -8,7 +8,7 @@ import { ListadoEspectaculosComponent } from './listado-espectaculos/listado-esp
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { LayoutModule } from '@angular/cdk/layout';
-import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule, MatFormField, MatFormFieldModule, MatInputModule, MatTableModule, MatSelectModule, MatDatepickerModule, MatCardModule, MatNativeDateModule } from '@angular/material';
+import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule, MatFormField, MatFormFieldModule, MatInputModule, MatTableModule, MatSelectModule, MatDatepickerModule, MatCardModule, MatNativeDateModule, MatSnackBarModule } from '@angular/material';
 import { ListadoEstablecimientosComponent } from './listado-establecimientos/listado-establecimientos.component';
 import { AppRoutingModule } from './/app-routing.module';
 import { CrearEstablecimientoComponent } from './crear-establecimiento/crear-establecimiento.component';
@@ -16,6 +16,7 @@ import { CrearEspectaculoComponent } from './crear-espectaculo/crear-espectaculo
 import { ErrorInterceptor } from './interceptors/error.interceptor';
 import { LoginComponent } from './login/login.component';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
+import { AlertComponent } from './alert/alert.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { JwtInterceptor } from './interceptors/jwt.interceptor';
     ListadoEstablecimientosComponent,
     CrearEstablecimientoComponent,
     CrearEspectaculoComponent,
-    LoginComponent
+    LoginComponent,
+    AlertComponent
   ],
   imports: [
     BrowserModule,
@@ -47,7 +49,8 @@ import { JwtInterceptor } from './interceptors/jwt.interceptor';
     MatCardModule,
     MatNativeDateModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatSnackBarModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

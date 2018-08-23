@@ -6,6 +6,7 @@ import { Espectaculo } from '../model/espectaculo';
 import { EspectaculosService } from '../espectaculos.service';
 import { EstablecimientosService } from '../establecimientos.service';
 import { Establecimiento } from '../model/establecimiento';
+import { AlertService } from '../alert.service';
 
 @Component({
   selector: 'app-crear-espectaculo',
@@ -21,7 +22,7 @@ export class CrearEspectaculoComponent implements OnInit {
   establecimientos: Establecimiento[];
   displayedColumns: string[] = ['fechaHora', 'artista']
 
-  constructor(private especService: EspectaculosService, private location: Location, private route: ActivatedRoute, private estabService: EstablecimientosService) { }
+  constructor(private especService: EspectaculosService, private location: Location, private route: ActivatedRoute, private estabService: EstablecimientosService, private alertService: AlertService) { }
 
   ngOnInit() {
 
@@ -42,7 +43,7 @@ export class CrearEspectaculoComponent implements OnInit {
   saveEspectaculo(): void {
     this.espectaculo.establecimiento = this.establecimientos.find(e => e.id == this.selectedEstab);
     if(this.idParam) {
-      this.especService.putEspectaculo(this.espectaculo).subscribe(() => this.goBack());
+      this.especService.putEspectaculo(this.espectaculo).subscribe(() => this.goBack(), error => this.alertService.snack("Error: " + error.status));
     } else {
       this.especService.postEspectaculo(this.espectaculo).subscribe(() => this.goBack());
     }
