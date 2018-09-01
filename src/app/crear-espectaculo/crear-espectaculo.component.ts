@@ -49,6 +49,14 @@ export class CrearEspectaculoComponent implements OnInit {
     }
   }
 
+  deleteEspectaculo(): void {
+    if (this.idParam) {
+      this.especService.deleteEspectaculo(this.espectaculo.id).subscribe(() => this.goBack());
+    } else {
+      this.goBack();
+    }
+  }
+
   addFuncion(): void {
     let func = new Funcion();
     func.fecha = new Date();

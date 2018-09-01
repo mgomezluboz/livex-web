@@ -34,6 +34,14 @@ export class CrearEstablecimientoComponent implements OnInit {
     }
   }
 
+  deleteEstablecimiento(): void {
+    if (this.idParam) {
+      this.estabService.deleteEstablecimiento(this.establecimiento.id).subscribe(() => this.goBack());
+    } else {
+      this.goBack();
+    }
+  }
+
   goBack(): void {
     this.location.back();
   }
