@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Espectaculo } from '../model/espectaculo';
-import { Funcion } from '../model/funcion';
-import { Establecimiento } from '../model/establecimiento';
 import { EspectaculosService } from '../espectaculos.service';
 import { Router } from '@angular/router';
 

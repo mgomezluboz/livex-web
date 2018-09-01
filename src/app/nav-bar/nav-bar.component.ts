@@ -14,6 +14,7 @@ export class NavBarComponent {
 
   isLoggedIn$: Observable<boolean>;
   username$: Observable<string>;
+  isAdmin$: Observable<boolean>;
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
@@ -25,6 +26,7 @@ export class NavBarComponent {
   ngOnInit(): void {
     this.isLoggedIn$ = this.authService.isLoggedIn;
     this.username$ = this.authService.getUsername;
+    this.isAdmin$ = this.authService.getAdmin;
   }
 
   logout(): void {

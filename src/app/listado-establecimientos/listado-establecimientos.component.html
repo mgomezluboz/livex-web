@@ -1,5 +1,5 @@
 <mat-list>
-  <mat-list-item *ngFor="let establecimiento of establecimientos">
+  <mat-list-item *ngFor="let establecimiento of establecimientos" style="margin-top: 2%; margin-bottom: 0">
     <a matLine (click)="goTo(establecimiento)"><h2> {{establecimiento.nombre}} </h2></a>
     <p matLine> Direccion: {{establecimiento.direccion}} </p>
     <p matLine> Capacidad: {{establecimiento.capacidad}} </p>

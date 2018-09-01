@@ -2,21 +2,26 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { environment } from '../environments/environment';
+import { of as observableOf } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  baseIp: string = "http://127.0.0.1:8080/auth";
+  serverIp: string = environment.baseUrl;
+  baseIp: string = this.serverIp + "/auth";
   private loggedIn = new BehaviorSubject<boolean>(false);
   private username = new BehaviorSubject<string>("");
+  private userAdmin = new BehaviorSubject<boolean>(false);
 
   constructor(private http: HttpClient, private router: Router) { 
     if(localStorage.getItem('username')) {
       this.loggedIn.next(true);
       this.username.next(localStorage.getItem('username'));
+      this.userAdmin.next(this.getAdminStorage());
     }
   }
 
@@ -28,6 +33,7 @@ export class AuthService {
     localStorage.removeItem('currentUser');
     localStorage.removeItem('username');
     this.loggedIn.next(false);
+    this.userAdmin.next(false);
     this.username.next("");
     this.router.navigate(["login"]);
   }
@@ -40,6 +46,14 @@ export class AuthService {
     return this.username.asObservable();
   }
 
+  get getAdmin(): Observable<boolean> {
+    return this.userAdmin.asObservable();
+  }
+
+  getAdminStorage(): boolean {
+    return JSON.parse(localStorage.getItem('currentUser')).admin as boolean;
+  }
+
   login(username: string, password: string) {
     return this.http.post<any>(`${this.baseIp}`, { username: username, password: password })
     .pipe(map(user => {
@@ -50,6 +64,7 @@ export class AuthService {
             localStorage.setItem('username', username);
             this.loggedIn.next(true);
             this.username.next(username);
+            this.userAdmin.next(user.admin);
             return user;
         }
     }));

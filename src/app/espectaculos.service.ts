@@ -4,6 +4,7 @@ import { throwError, Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Espectaculo } from './model/espectaculo';
 import { AlertService } from './alert.service';
+import { environment } from '../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -11,22 +12,23 @@ import { AlertService } from './alert.service';
 export class EspectaculosService {
 
   //baseIp = "http://192.168.0.86:8080/espectaculos";
-  baseIp = "http://127.0.0.1:8080/espectaculos";
+  serverIp: string = environment.baseUrl;
+  baseIp = this.serverIp + "/espectaculos";
 
   constructor(private http: HttpClient, private alertService: AlertService) { }
 
   getEspectaculos(): Observable<Espectaculo[]> {
-    return this.http.get<Espectaculo[]>(this.baseIp).pipe(catchError(this.handleError));
+    return this.http.get<Espectaculo[]>(this.baseIp);//.pipe(catchError(this.handleError));
   }
 
   getEspectaculoById(id: string): Observable<Espectaculo> {
     const url = `${this.baseIp}/${id}`;
-    return this.http.get<Espectaculo>(url).pipe(catchError(this.handleError));
+    return this.http.get<Espectaculo>(url);//.pipe(catchError(this.handleError));
   }
 
   postEspectaculo(e: Espectaculo):Observable<any> {
     const httpOptions = { headers: new HttpHeaders({'Content-Type': 'application/json'}) };
-    return this.http.post(this.baseIp, e, httpOptions).pipe(catchError(this.handleError));
+    return this.http.post(this.baseIp, e, httpOptions);//.pipe(catchError(this.handleError));
   }
 
   putEspectaculo(e: Espectaculo):Observable<any> {
@@ -37,10 +39,10 @@ export class EspectaculosService {
   deleteEspectaculo(id: string):Observable<any> {
     const httpOptions = { headers: new HttpHeaders({'Content-Type': 'application/json'}) };
     const url = `${this.baseIp}/${id}`;
-    return this.http.delete(url, httpOptions).pipe(catchError(this.handleError));
+    return this.http.delete(url, httpOptions);//.pipe(catchError(this.handleError));
   }
 
-  private handleError(error: HttpErrorResponse) {
+  /*private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
       console.error('An error occurred:', error.error.message); // A client-side or network error occurred.
     } else {
@@ -52,6 +54,6 @@ export class EspectaculosService {
     }
     return throwError(
       'Something bad happened; please try again later.'); // return an observable with a user-facing error message
-  };
+  };*/
   
 }

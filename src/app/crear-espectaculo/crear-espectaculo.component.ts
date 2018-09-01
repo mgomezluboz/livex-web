@@ -43,7 +43,7 @@ export class CrearEspectaculoComponent implements OnInit {
   saveEspectaculo(): void {
     this.espectaculo.establecimiento = this.establecimientos.find(e => e.id == this.selectedEstab);
     if(this.idParam) {
-      this.especService.putEspectaculo(this.espectaculo).subscribe(() => this.goBack(), error => this.alertService.snack("Error: " + error.status));
+      this.especService.putEspectaculo(this.espectaculo).subscribe(() => this.goBack());
     } else {
       this.especService.postEspectaculo(this.espectaculo).subscribe(() => this.goBack());
     }

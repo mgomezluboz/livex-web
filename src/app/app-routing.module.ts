@@ -5,13 +5,17 @@ import { ListadoEstablecimientosComponent } from './listado-establecimientos/lis
 import { CrearEstablecimientoComponent } from './crear-establecimiento/crear-establecimiento.component';
 import { CrearEspectaculoComponent } from './crear-espectaculo/crear-espectaculo.component';
 import { LoginComponent } from './login/login.component';
+import { ListadoUsuariosComponent } from './listado-usuarios/listado-usuarios.component';
+import { EditarUsuarioComponent } from './editar-usuario/editar-usuario.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'espectaculos', component: ListadoEspectaculosComponent },
   { path: 'establecimientos', component: ListadoEstablecimientosComponent },
+  { path: 'usuarios', component: ListadoUsuariosComponent },
   { path: 'establecimientos/edit', component: CrearEstablecimientoComponent },
   { path: 'espectaculos/edit', component: CrearEspectaculoComponent },
+  { path: 'usuarios/edit', component: EditarUsuarioComponent },
   { path: 'login', component: LoginComponent }
 ];
 

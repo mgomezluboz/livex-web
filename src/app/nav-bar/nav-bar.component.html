@@ -11,6 +11,9 @@
       <a mat-list-item routerLink="/espectaculos">Administrar espect&aacute;culos</a>
       <mat-divider></mat-divider>
       <a mat-list-item routerLink="/establecimientos">Administrar establecimientos</a>
+      <mat-divider></mat-divider>
+      <a mat-list-item routerLink="/usuarios" *ngIf="isAdmin$ | async">Administrar usuarios del sistema</a>
+      <mat-divider></mat-divider>
     </mat-nav-list>
     <div class="bottomDiv">
       <mat-card color="primary">

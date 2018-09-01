@@ -17,6 +17,8 @@ import { ErrorInterceptor } from './interceptors/error.interceptor';
 import { LoginComponent } from './login/login.component';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
 import { AlertComponent } from './alert/alert.component';
+import { ListadoUsuariosComponent } from './listado-usuarios/listado-usuarios.component';
+import { EditarUsuarioComponent } from './editar-usuario/editar-usuario.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,9 @@ import { AlertComponent } from './alert/alert.component';
     CrearEstablecimientoComponent,
     CrearEspectaculoComponent,
     LoginComponent,
-    AlertComponent
+    AlertComponent,
+    ListadoUsuariosComponent,
+    EditarUsuarioComponent
   ],
   imports: [
     BrowserModule,

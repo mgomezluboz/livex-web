@@ -1,0 +1,7 @@
+<mat-list>
+  <mat-list-item *ngFor="let usuario of usuarios" style="margin-top: 2%; margin-bottom: 0">
+    <a matLine (click)="goTo(usuario)"><h2> {{usuario.username}} </h2></a>
+    <p matLine> Rol: {{usuario.rol.name}} </p>
+  </mat-list-item>
+</mat-list>
+<button mat-button routerLink="/usuarios/edit">Nuevo usuario</button>

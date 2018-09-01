@@ -26,7 +26,7 @@ export class AlertService {
     }
 
     snack(message: string) {
-        this.snackBar.open(message, null, {duration: 1000});
+        this.snackBar.open(message, null, {duration: 1500});
     }
  
     success(message: string, keepAfterNavigationChange = false) {
