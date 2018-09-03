@@ -14,6 +14,7 @@ export class EditarUsuarioComponent implements OnInit {
 
   idParam: string;
   usuario: User;
+  newPassword: string;
   selectedRol: string;
   roles: Rol[];
 
@@ -33,10 +34,25 @@ export class EditarUsuarioComponent implements OnInit {
 
   saveUser(): void {
     this.usuario.rol = this.roles.find(e => e.name == this.selectedRol);
+
+    if(this.newPassword.trim() != "") {
+      this.usuario.password = this.newPassword;
+    } else {
+      this.usuario.password = null;
+    }
+
     if(this.idParam) {
       this.userService.update(this.usuario).subscribe(() => this.goBack());
     } else {
       this.userService.register(this.usuario).subscribe(() => this.goBack());
+    }
+  }
+
+  deleteUser(): void {
+    if(this.idParam) {
+      this.userService.delete(this.usuario.id).subscribe(() => this.goBack());
+    } else {
+      this.goBack();
     }
   }
 
