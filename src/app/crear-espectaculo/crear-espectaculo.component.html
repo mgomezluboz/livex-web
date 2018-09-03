@@ -13,24 +13,60 @@
         </mat-select>
       </mat-form-field>
     <br>
-    </form>
+</form>
 
-<div *ngFor="let funcion of espectaculo.funciones">
-<mat-card>
-    <mat-form-field appearance="outline">
-      <input matInput [matDatepicker]="picker" placeholder="Fecha y hora de funcion" [(ngModel)]="funcion.fecha" name="fecha" style="text-align: center">
-      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
-    </mat-form-field>
-    <mat-form-field appearance="outline">
-        <mat-label>Artista</mat-label>
-        <input matInput placeholder="Artista" [(ngModel)]="funcion.artista" name="artista" style="text-align: center">
-    </mat-form-field>
-    <button mat-button (click)="deleteFuncion(funcion)" style="background-color: red;">X</button>
-</mat-card>
-</div>
-<br>
-<button mat-button (click)="addFuncion()">Agregar funcion</button>
+<mat-tab-group>
+<mat-tab label="Funciones">
+  <div *ngFor="let funcion of espectaculo.funciones">
+  <mat-card>
+      <mat-form-field appearance="outline">
+        <input matInput [matDatepicker]="picker" placeholder="Fecha y hora de funcion" [(ngModel)]="funcion.fecha" name="fecha" style="text-align: center">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+          <mat-label>Artista</mat-label>
+          <input matInput placeholder="Artista" [(ngModel)]="funcion.artista" name="artista" style="text-align: center">
+      </mat-form-field>
+      <button mat-button (click)="editSetList(funcion)">Editar listado de canciones</button>
+      <button mat-button (click)="deleteFuncion(funcion)" style="background-color: red;">X</button>
+  </mat-card>
+  </div>
+  <br>
+  <button mat-button (click)="addFuncion()">Agregar funcion</button>
+</mat-tab>
+<mat-tab label="Comercios">
+  <div *ngFor="let comercio of espectaculo.comercios">
+      <mat-card>
+          <mat-form-field appearance="outline">
+              <mat-label>Nombre</mat-label>
+              <input matInput placeholder="Nombre" [(ngModel)]="comercio.nombre" name="artista" style="text-align: center">
+          </mat-form-field>
+          <button mat-button (click)="deleteComercio(comercio)" style="background-color: red;">X</button>
+          <br>
+          <mat-list role="list">
+              <mat-list-item role="listitem" *ngFor="let item of comercio.productos" style="margin-bottom: 2%">
+                  <mat-form-field appearance="outline">
+                      <mat-label>Nombre</mat-label>
+                      <input matInput placeholder="Nombre" [(ngModel)]="item.nombre" name="nombre" style="text-align: center">
+                  </mat-form-field>
+                  <mat-form-field appearance="outline">
+                      <mat-label>Precio</mat-label>
+                      <input matInput placeholder="Precio" type="number" [(ngModel)]="item.precio" name="precio" style="text-align: center">
+                  </mat-form-field>
+                  <mat-form-field appearance="outline">
+                      <mat-label>Stock</mat-label>
+                      <input matInput placeholder="Stock" type="number" [(ngModel)]="item.stock" name="stock" style="text-align: center">
+                  </mat-form-field>
+                  <button mat-button (click)="deleteItem(item, comercio)" style="background-color: red;">X</button>
+              </mat-list-item>
+        </mat-list>
+        <button mat-button (click)="addItem(comercio)">Agregar producto</button>
+        </mat-card>
+  </div>
+  <button mat-button (click)="addComercio()">Agregar comercio</button>    
+</mat-tab>
+</mat-tab-group>
 <br><br>
 <button mat-button (click)="saveEspectaculo()">Guardar cambios</button>
 <button mat-button (click)="deleteEspectaculo()">Eliminar espect&aacute;culo</button>

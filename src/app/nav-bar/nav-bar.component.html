@@ -1,13 +1,14 @@
-<mat-sidenav-container class="sidenav-container" *ngIf="isLoggedIn$ | async">
+<mat-sidenav-container class="sidenav-container">
   <mat-sidenav
     #drawer
     class="sidenav"
     fixedInViewport="true"
     [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
     [mode]="(isHandset$ | async) ? 'over' : 'side'"
-    [opened]="!(isHandset$ | async)">
-    <mat-toolbar color="primary">Menu</mat-toolbar>
+    [opened]="!(isHandset$ | async)" *ngIf="isLoggedIn$ | async">
+    <mat-toolbar color="primary"><img src="../../assets/livexLogo.png" alt="" style="float: center; size: 0vmax; width: 100%;"></mat-toolbar>
     <mat-nav-list>
+      <mat-divider></mat-divider>
       <a mat-list-item routerLink="/espectaculos">Administrar espect&aacute;culos</a>
       <mat-divider></mat-divider>
       <a mat-list-item routerLink="/establecimientos">Administrar establecimientos</a>
@@ -41,6 +42,7 @@
       </button>
       <span></span>
     </mat-toolbar>
-    <!-- Add Content Here -->
+    <app-alert></app-alert>
+    <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>

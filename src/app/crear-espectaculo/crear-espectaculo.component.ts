@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { Funcion } from '../model/funcion';
@@ -7,6 +7,13 @@ import { EspectaculosService } from '../espectaculos.service';
 import { EstablecimientosService } from '../establecimientos.service';
 import { Establecimiento } from '../model/establecimiento';
 import { AlertService } from '../alert.service';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import { Comercio } from '../model/comercio';
+import { ItemComercio } from '../model/item.comercio';
+
+export interface DialogData {
+  setList: string;
+}
 
 @Component({
   selector: 'app-crear-espectaculo',
@@ -22,7 +29,7 @@ export class CrearEspectaculoComponent implements OnInit {
   establecimientos: Establecimiento[];
   displayedColumns: string[] = ['fechaHora', 'artista']
 
-  constructor(private especService: EspectaculosService, private location: Location, private route: ActivatedRoute, private estabService: EstablecimientosService, private alertService: AlertService) { }
+  constructor(private especService: EspectaculosService, private location: Location, private route: ActivatedRoute, private estabService: EstablecimientosService, private alertService: AlertService, private dialog: MatDialog) { }
 
   ngOnInit() {
 
@@ -57,6 +64,11 @@ export class CrearEspectaculoComponent implements OnInit {
     }
   }
 
+  editSetList(funcion: Funcion): void {
+    const dialogRef = this.dialog.open(SetListDialog, {data: {setList: funcion.setList}});
+    dialogRef.afterClosed().subscribe(result => {funcion.setList = result});
+  }
+
   addFuncion(): void {
     let func = new Funcion();
     func.fecha = new Date();
@@ -70,7 +82,67 @@ export class CrearEspectaculoComponent implements OnInit {
     }
   }
 
+  setComercios(lista: Comercio[]): void {
+    this.espectaculo.comercios = lista;
+  }
+
+  deleteComercio(c: Comercio): void {
+    const index: number = this.espectaculo.comercios.indexOf(c);
+    if(index !== -1) {
+      this.espectaculo.comercios.splice(index, 1);
+    }
+  }
+
+  addComercio(): void {
+    let c = new Comercio();
+    if (this.espectaculo.comercios == null) {
+      this.espectaculo.comercios = [];
+    }
+    this.espectaculo.comercios.push(c);
+  }
+
+  addItem(c: Comercio): void {
+    let i = new ItemComercio();
+    let comer = this.espectaculo.comercios.find(com => com.nombre == c.nombre);
+    if (comer.productos == null) {
+      comer.productos = [];
+    }
+    comer.productos.push(i);
+  }
+
+  deleteItem(i: ItemComercio, c: Comercio) {
+    let comer = this.espectaculo.comercios.find(com => com.nombre == c.nombre);
+    const index: number = comer.productos.indexOf(i);
+    if(index !== -1) {
+      comer.productos.splice(index, 1);
+    }
+  }
+
   goBack(): void {
     this.location.back();
   }
+}
+
+@Component({
+  selector: 'set-list-dialog',
+  templateUrl: 'set-list-dialog.html',
+})
+export class SetListDialog {
+
+  listado:string;
+
+  constructor(
+    public dialogRef: MatDialogRef<SetListDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {
+      this.listado = data.setList;
+    }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+  close() {
+    this.dialogRef.close(this.listado);
+  }
+
 }

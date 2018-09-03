@@ -5,6 +5,7 @@
 .sidenav {
   width: 200px;
   overflow: hidden;
+  background: #3f51b5;
 }
 
 .mat-toolbar.mat-primary {
@@ -19,12 +20,21 @@
 
 .mat-card {
   position: relative;
-  background: #3f51b5;
+  background: #35449b;
   color: white;
   margin-left: 10%;
   margin-bottom: 10%;
 }
 
+.mat-list-item {
+  color: white;
+}
+
+img {
+  margin: 0%;
+  padding: 0%;
+}
+
 button {
-  background: grey;
+  background: rgb(105, 105, 105);
 }

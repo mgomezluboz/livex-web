@@ -14,7 +14,7 @@ export class EditarUsuarioComponent implements OnInit {
 
   idParam: string;
   usuario: User;
-  newPassword: string;
+  newPassword: string = "";
   selectedRol: string;
   roles: Rol[];
 

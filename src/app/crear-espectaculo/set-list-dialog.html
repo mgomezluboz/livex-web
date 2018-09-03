@@ -1,0 +1,11 @@
+<div style="align-content: center">
+<h3 mat-dialog-title>Ingrese el listado de canciones separadas por #:</h3>
+<mat-form-field style="width: 100%;">
+    <textarea matInput placeholder="Canciones..." [(ngModel)]="listado"></textarea>
+</mat-form-field>
+<mat-dialog-actions align="center">
+    <!-- <button mat-button mat-dialog-close>No</button>-->
+    <!-- The mat-dialog-close directive optionally accepts a value as a result for the dialog. -->
+    <button mat-button (click)="close()">Guardar cambios</button>
+</mat-dialog-actions>
+</div>
