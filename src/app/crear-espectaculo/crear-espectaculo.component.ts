@@ -45,8 +45,8 @@ export class CrearEspectaculoComponent implements OnInit {
       this.espectaculo.funciones = [func];
       this.funciones = this.espectaculo.funciones;
     }
-
   }
+
   saveEspectaculo(): void {
     this.espectaculo.establecimiento = this.establecimientos.find(e => e.id == this.selectedEstab);
     if(this.idParam) {
@@ -138,7 +138,8 @@ export class SetListDialog {
     }
 
   onNoClick(): void {
-    this.dialogRef.close();
+    this.dialogRef.close(this.listado);
+    console.info("Se noclickeo.");
   }
 
   close() {
