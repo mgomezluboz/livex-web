@@ -7,6 +7,11 @@
     </mat-form-field>
     <br>
     <mat-form-field appearance="outline" style="width: 25%;">
+        <mat-label>Link para la compra de entradas</mat-label>
+        <input matInput placeholder="Link" [(ngModel)]="espectaculo.linkCompra" name="linkCompra" style="text-align: center">
+      </mat-form-field>
+      <br>
+    <mat-form-field appearance="outline" style="width: 25%;">
         <mat-label>Establecimiento</mat-label>
         <mat-select [(ngModel)]="selectedEstab" name="establecimiento" style="text-align: center">
           <mat-option *ngFor="let estab of establecimientos" value="{{estab.id}}" style="text-align: center">{{estab.nombre}}</mat-option>
@@ -20,9 +25,13 @@
   <div *ngFor="let funcion of espectaculo.funciones">
   <mat-card>
       <mat-form-field appearance="outline">
-        <input matInput [matDatepicker]="picker" placeholder="Fecha y hora de funcion" [(ngModel)]="funcion.fecha" name="fecha" style="text-align: center">
+        <input matInput [matDatepicker]="picker" placeholder="Fecha de la funcion" [(ngModel)]="funcion.fecha" name="fecha" style="text-align: center">
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Hora</mat-label>
+        <input matInput placeholder="Hora" [(ngModel)]="funcion.hora" name="hora" style="text-align: center">
       </mat-form-field>
       <mat-form-field appearance="outline">
           <mat-label>Artista</mat-label>
@@ -30,6 +39,11 @@
       </mat-form-field>
       <button mat-button (click)="editSetList(funcion)">Editar listado de canciones</button>
       <button mat-button (click)="deleteFuncion(funcion)" style="background-color: red;">X</button>
+      <br>
+      <mat-form-field appearance="outline">
+        <mat-label>Link a imagen</mat-label>
+        <input matInput placeholder="Link" [(ngModel)]="funcion.imagenRef" name="imagenRef" style="text-align: center">
+      </mat-form-field>
   </mat-card>
   </div>
   <br>
@@ -40,7 +54,11 @@
       <mat-card>
           <mat-form-field appearance="outline">
               <mat-label>Nombre</mat-label>
-              <input matInput placeholder="Nombre" [(ngModel)]="comercio.nombre" name="artista" style="text-align: center">
+              <input matInput placeholder="Nombre" [(ngModel)]="comercio.nombre" name="nombreComercio" style="text-align: center">
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+          <mat-label>Link a imagen</mat-label>
+            <input matInput placeholder="Link" [(ngModel)]="comercio.imagenRef" name="imagenRefComercio" style="text-align: center">
           </mat-form-field>
           <button mat-button (click)="deleteComercio(comercio)" style="background-color: red;">X</button>
           <br>
@@ -53,10 +71,6 @@
                   <mat-form-field appearance="outline">
                       <mat-label>Precio</mat-label>
                       <input matInput placeholder="Precio" type="number" [(ngModel)]="item.precio" name="precio" style="text-align: center">
-                  </mat-form-field>
-                  <mat-form-field appearance="outline">
-                      <mat-label>Stock</mat-label>
-                      <input matInput placeholder="Stock" type="number" [(ngModel)]="item.stock" name="stock" style="text-align: center">
                   </mat-form-field>
                   <button mat-button (click)="deleteItem(item, comercio)" style="background-color: red;">X</button>
               </mat-list-item>

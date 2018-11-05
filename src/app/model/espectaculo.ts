@@ -8,6 +8,7 @@ export class Espectaculo {
     funciones: Funcion[];
     establecimiento: Establecimiento;
     comercios: Comercio[];
+    linkCompra: string;
 
     constructor() {
         this.funciones = [];
