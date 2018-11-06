@@ -9,14 +9,14 @@
     <mat-form-field appearance="outline" style="width: 25%;">
         <mat-label>Link para la compra de entradas</mat-label>
         <input matInput placeholder="Link" [(ngModel)]="espectaculo.linkCompra" name="linkCompra" style="text-align: center">
-      </mat-form-field>
-      <br>
+    </mat-form-field>
+    <br>
     <mat-form-field appearance="outline" style="width: 25%;">
         <mat-label>Establecimiento</mat-label>
         <mat-select [(ngModel)]="selectedEstab" name="establecimiento" style="text-align: center">
           <mat-option *ngFor="let estab of establecimientos" value="{{estab.id}}" style="text-align: center">{{estab.nombre}}</mat-option>
         </mat-select>
-      </mat-form-field>
+    </mat-form-field>
     <br>
 </form>
 
@@ -61,6 +61,16 @@
             <input matInput placeholder="Link" [(ngModel)]="comercio.imagenRef" name="imagenRefComercio" style="text-align: center">
           </mat-form-field>
           <button mat-button (click)="deleteComercio(comercio)" style="background-color: red;">X</button>
+          <br>
+          Posicion:
+          <mat-form-field appearance="outline">
+          <mat-label>Latitud</mat-label>
+            <input matInput placeholder="Latitud" type="number" [(ngModel)]="comercio.posicion.latitud" name="latitudComercio" style="text-align: center">
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+          <mat-label>Longitud</mat-label>
+            <input matInput placeholder="Longitud" type="number" [(ngModel)]="comercio.posicion.longitud" name="longitudComercio" style="text-align: center">
+          </mat-form-field>
           <br>
           <mat-list role="list">
               <mat-list-item role="listitem" *ngFor="let item of comercio.productos" style="margin-bottom: 2%">

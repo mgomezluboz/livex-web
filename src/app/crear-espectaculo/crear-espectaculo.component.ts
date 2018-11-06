@@ -48,6 +48,16 @@ export class CrearEspectaculoComponent implements OnInit {
   }
 
   saveEspectaculo(): void {
+    if (this.checkHoraFunciones()) {
+      this.alertService.snack("Ha ingresado una hora de función inválida, corrijalo antes de proceder.");
+      return;
+    }
+
+    if (this.checkFechaFunciones()) {
+      this.alertService.snack("Ha ingresado una fecha de función anterior a la fecha actual, corrijalo antes de proceder.");
+      return;
+    }
+
     this.espectaculo.establecimiento = this.establecimientos.find(e => e.id == this.selectedEstab);
     if(this.idParam) {
       this.especService.putEspectaculo(this.espectaculo).subscribe(() => this.goBack());
@@ -116,6 +126,27 @@ export class CrearEspectaculoComponent implements OnInit {
     if(index !== -1) {
       comer.productos.splice(index, 1);
     }
+  }
+
+  checkHoraFunciones(): boolean {
+    let regex = /[0-2][0-9][0-6][0-9]/;
+    for(let func of this.funciones) {
+      if (!regex.test(func.hora)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  checkFechaFunciones(): boolean {
+    let hoy = new Date();
+    hoy.setHours(0,0,0,0);
+    for(let func of this.funciones) {
+      if (func.fecha.getTime() < hoy.getTime()) {
+        return true;
+      }
+    }
+    return false;
   }
 
   goBack(): void {
