@@ -58,6 +58,11 @@ export class CrearEspectaculoComponent implements OnInit {
       return;
     }
 
+    if (this.checkPrecio()) {
+      this.alertService.snack("Ha ingresado un precio negativo, asegurese que los precios sean valores positivos.");
+      return;
+    }
+
     this.espectaculo.establecimiento = this.establecimientos.find(e => e.id == this.selectedEstab);
     if(this.idParam) {
       this.especService.putEspectaculo(this.espectaculo).subscribe(() => this.goBack());
@@ -144,6 +149,17 @@ export class CrearEspectaculoComponent implements OnInit {
     for(let func of this.funciones) {
       if (func.fecha.getTime() < hoy.getTime()) {
         return true;
+      }
+    }
+    return false;
+  }
+
+  checkPrecio(): boolean {
+    for(let comercio of this.espectaculo.comercios) {
+      for(let producto of comercio.productos) {
+        if (producto.precio < 0) {
+          return true;
+        }
       }
     }
     return false;

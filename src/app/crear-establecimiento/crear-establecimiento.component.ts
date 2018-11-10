@@ -3,6 +3,7 @@ import { Establecimiento } from '../model/establecimiento';
 import { EstablecimientosService } from '../establecimientos.service';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
+import { AlertService } from '../alert.service';
 
 @Component({
   selector: 'app-crear-establecimiento',
@@ -14,7 +15,7 @@ export class CrearEstablecimientoComponent implements OnInit {
   idParam: string = null;
   establecimiento: Establecimiento;
 
-  constructor(private estabService: EstablecimientosService, private location: Location, private route: ActivatedRoute) { }
+  constructor(private estabService: EstablecimientosService, private location: Location, private route: ActivatedRoute, private alertService: AlertService) { }
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => this.idParam = params['id']);
@@ -27,6 +28,11 @@ export class CrearEstablecimientoComponent implements OnInit {
   }
 
   saveEstablecimiento(): void {
+    if (this.checkCapacidadNoNegativa()) {
+      this.alertService.snack("La capacidad del establecimiento no puede ser nula o negativa.");
+      return;
+    }
+
     if(this.idParam) {
       this.estabService.putEstablecimiento(this.establecimiento).subscribe(() => this.goBack());
     } else {
@@ -40,6 +46,14 @@ export class CrearEstablecimientoComponent implements OnInit {
     } else {
       this.goBack();
     }
+  }
+
+  checkCapacidadNoNegativa(): boolean {
+    if (this.establecimiento.capacidad <= 0) {
+      return true;
+    }
+
+    return false;
   }
 
   goBack(): void {
