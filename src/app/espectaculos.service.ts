@@ -42,6 +42,14 @@ export class EspectaculosService {
     return this.http.delete(url, httpOptions);//.pipe(catchError(this.handleError));
   }
 
+  putImagen(id:string, file: File):Observable<any> {
+    const httpOptions = {};
+    const url = `${this.baseIp}/${id}/imagen`;
+    const formData = new FormData();
+    formData.append('file', file, file.name);
+    return this.http.put(url, formData, httpOptions);
+  }
+
   /*private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
       console.error('An error occurred:', error.error.message); // A client-side or network error occurred.

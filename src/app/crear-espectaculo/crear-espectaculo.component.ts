@@ -27,7 +27,9 @@ export class CrearEspectaculoComponent implements OnInit {
   espectaculo: Espectaculo;
   selectedEstab: string;
   establecimientos: Establecimiento[];
-  displayedColumns: string[] = ['fechaHora', 'artista']
+  displayedColumns: string[] = ['fechaHora', 'artista'];
+  fileToUpload: File = null;
+  imagenChanged: boolean = false;
 
   constructor(private especService: EspectaculosService, private location: Location, private route: ActivatedRoute, private estabService: EstablecimientosService, private alertService: AlertService, private dialog: MatDialog) { }
 
@@ -65,9 +67,14 @@ export class CrearEspectaculoComponent implements OnInit {
 
     this.espectaculo.establecimiento = this.establecimientos.find(e => e.id == this.selectedEstab);
     if(this.idParam) {
+      if (this.imagenChanged) {
+        this.especService.putImagen(this.idParam, this.fileToUpload);
+      }
       this.especService.putEspectaculo(this.espectaculo).subscribe(() => this.goBack());
     } else {
+      let idEspec: string;
       this.especService.postEspectaculo(this.espectaculo).subscribe(() => this.goBack());
+      //.subscribe(() => this.goBack())
     }
   }
 
@@ -131,6 +138,11 @@ export class CrearEspectaculoComponent implements OnInit {
     if(index !== -1) {
       comer.productos.splice(index, 1);
     }
+  }
+
+  handleFileInput(files: FileList) {
+    this.imagenChanged = true;
+    this.fileToUpload = files.item[0];
   }
 
   checkHoraFunciones(): boolean {

@@ -18,6 +18,13 @@
         </mat-select>
     </mat-form-field>
     <br>
+    <div class="form-group">
+        <label for="file">Imagen del espectaculo</label>
+        <input type="file"
+               id="file"
+               (change)="handleFileInput($event.target.files)">
+    </div>
+    <img src="environment.baseUrl/espectaculos/espectaculo.id/imagen"/>
 </form>
 
 <mat-tab-group>
