@@ -43,11 +43,11 @@ export class EspectaculosService {
   }
 
   putImagen(id:string, file: File):Observable<any> {
-    const httpOptions = {};
+    //const httpOptions = {};
     const url = `${this.baseIp}/${id}/imagen`;
     const formData = new FormData();
     formData.append('file', file, file.name);
-    return this.http.put(url, formData, httpOptions);
+    return this.http.put(url, formData);
   }
 
   /*private handleError(error: HttpErrorResponse) {

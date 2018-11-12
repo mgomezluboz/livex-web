@@ -10,6 +10,8 @@ import { AlertService } from '../alert.service';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { Comercio } from '../model/comercio';
 import { ItemComercio } from '../model/item.comercio';
+import { environment } from '../../environments/environment';
+import { Observable, BehaviorSubject } from 'rxjs';
 
 export interface DialogData {
   setList: string;
@@ -30,6 +32,8 @@ export class CrearEspectaculoComponent implements OnInit {
   displayedColumns: string[] = ['fechaHora', 'artista'];
   fileToUpload: File = null;
   imagenChanged: boolean = false;
+  imageLink$: Observable<string>;
+  private imageLink = new BehaviorSubject<string>("");
 
   constructor(private especService: EspectaculosService, private location: Location, private route: ActivatedRoute, private estabService: EstablecimientosService, private alertService: AlertService, private dialog: MatDialog) { }
 
@@ -40,6 +44,8 @@ export class CrearEspectaculoComponent implements OnInit {
 
     if(this.idParam) {
       this.especService.getEspectaculoById(this.idParam).subscribe(estab => {this.espectaculo = estab; this.espectaculo.funciones.forEach(func => func.fecha = new Date(func.fecha)); this.funciones = this.espectaculo.funciones; this.selectedEstab = this.espectaculo.establecimiento.id;});
+      this.imageLink.next(`${environment.baseUrl}espectaculos/${this.idParam}/imagen`);
+      this.imageLink$ = this.getImageLink();
     } else {
       this.espectaculo = new Espectaculo();
       let func = new Funcion();
@@ -47,6 +53,10 @@ export class CrearEspectaculoComponent implements OnInit {
       this.espectaculo.funciones = [func];
       this.funciones = this.espectaculo.funciones;
     }
+  }
+
+  getImageLink(): Observable<string> {
+    return this.imageLink.asObservable();
   }
 
   saveEspectaculo(): void {
@@ -68,7 +78,7 @@ export class CrearEspectaculoComponent implements OnInit {
     this.espectaculo.establecimiento = this.establecimientos.find(e => e.id == this.selectedEstab);
     if(this.idParam) {
       if (this.imagenChanged) {
-        this.especService.putImagen(this.idParam, this.fileToUpload);
+        this.especService.putImagen(this.idParam, this.fileToUpload).subscribe();
       }
       this.especService.putEspectaculo(this.espectaculo).subscribe(() => this.goBack());
     } else {
@@ -142,7 +152,8 @@ export class CrearEspectaculoComponent implements OnInit {
 
   handleFileInput(files: FileList) {
     this.imagenChanged = true;
-    this.fileToUpload = files.item[0];
+    this.fileToUpload = files.item(0);
+    console.info("Se añadio la imagen " + this.fileToUpload.name);
   }
 
   checkHoraFunciones(): boolean {

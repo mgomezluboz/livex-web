@@ -20,11 +20,10 @@
     <br>
     <div class="form-group">
         <label for="file">Imagen del espectaculo</label>
-        <input type="file"
-               id="file"
-               (change)="handleFileInput($event.target.files)">
+        <input type="file" id="file" #file (change)="handleFileInput($event.target.files)">
     </div>
-    <img src="environment.baseUrl/espectaculos/espectaculo.id/imagen"/>
+    <br>
+    <img src="{{(imageLink$ | async)}}"/>
 </form>
 
 <mat-tab-group>

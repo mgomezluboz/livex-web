@@ -22,6 +22,8 @@ export class ErrorInterceptor implements HttpInterceptor {
             if (err.status === 403) {
                 this.alertService.snack("Error: No tiene los permisos requeridos para realizar esa accion.")
             }
+
+            this.alertService.snack(err.message);
              
             const error = err.error.message || err.statusText;
             return throwError(error);
