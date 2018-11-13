@@ -13,17 +13,22 @@ export class ErrorInterceptor implements HttpInterceptor {
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         return next.handle(request).pipe(catchError(err => {
             console.error("Hubo un error, lo agarro el interceptor." + err.message);
+            console.error(err.message);
             if (err.status === 401) {
                 // auto logout if 401 response returned from api
                 this.alertService.snack("Error: Usuario/contraseña inválidos, intente nuevamente.")
                 this.authenticationService.logout();
                 this.router.navigate(["login"]);
             }
-            if (err.status === 403) {
+            else if (err.status === 403) {
                 this.alertService.snack("Error: No tiene los permisos requeridos para realizar esa accion.")
             }
-
-            this.alertService.snack(err.message);
+            else if (err.message == "Http failure response for http://livexws.sa-east-1.elasticbeanstalk.com//espectaculos: 400 OK") {
+                this.alertService.snack("Error: Ese espectaculo ya existe.")
+            }
+            else {
+                this.alertService.snack(err.message);
+            }
              
             const error = err.error.message || err.statusText;
             return throwError(error);

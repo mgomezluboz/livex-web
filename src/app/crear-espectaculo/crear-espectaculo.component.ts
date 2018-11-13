@@ -12,6 +12,7 @@ import { Comercio } from '../model/comercio';
 import { ItemComercio } from '../model/item.comercio';
 import { environment } from '../../environments/environment';
 import { Observable, BehaviorSubject } from 'rxjs';
+import { Position } from '../model/position';
 
 export interface DialogData {
   setList: string;
@@ -60,6 +61,11 @@ export class CrearEspectaculoComponent implements OnInit {
   }
 
   saveEspectaculo(): void {
+    if (this.espectaculo.funciones.length < 1) {
+      this.alertService.snack("Debe tener por lo menos una funcion creada.");
+      return;
+    }
+
     if (this.checkHoraFunciones()) {
       this.alertService.snack("Ha ingresado una hora de función inválida, corrijalo antes de proceder.");
       return;
@@ -75,6 +81,11 @@ export class CrearEspectaculoComponent implements OnInit {
       return;
     }
 
+    if (this.checkComerciosRepetidos()) {
+      this.alertService.snack("Hay 2 comercios con el mismo nombre.");
+      return;
+    }
+
     this.espectaculo.establecimiento = this.establecimientos.find(e => e.id == this.selectedEstab);
     if(this.idParam) {
       if (this.imagenChanged) {
@@ -82,8 +93,17 @@ export class CrearEspectaculoComponent implements OnInit {
       }
       this.especService.putEspectaculo(this.espectaculo).subscribe(() => this.goBack());
     } else {
+
+      if (!this.imagenChanged) {
+        this.alertService.snack("Cargue una imagen para el espectaculo y pruebe nuevamente.");
+        return;
+      }
+
       let idEspec: string;
-      this.especService.postEspectaculo(this.espectaculo).subscribe(() => this.goBack());
+      this.especService.postEspectaculo(this.espectaculo).subscribe(data => {idEspec = data.id; this.especService.putImagen(idEspec, this.fileToUpload).subscribe(() => this.goBack());});
+      //if (this.imagenChanged) {
+      //  this.especService.putImagen(idEspec, this.fileToUpload).subscribe(() => this.goBack());
+      //}
       //.subscribe(() => this.goBack())
     }
   }
@@ -127,6 +147,8 @@ export class CrearEspectaculoComponent implements OnInit {
 
   addComercio(): void {
     let c = new Comercio();
+    c.productos = [];
+    c.posicion = new Position();
     if (this.espectaculo.comercios == null) {
       this.espectaculo.comercios = [];
     }
@@ -136,6 +158,9 @@ export class CrearEspectaculoComponent implements OnInit {
   addItem(c: Comercio): void {
     let i = new ItemComercio();
     let comer = this.espectaculo.comercios.find(com => com.nombre == c.nombre);
+    if (comer == null) {
+      console.error("COMERCIO NULO")
+    }
     if (comer.productos == null) {
       comer.productos = [];
     }
@@ -154,6 +179,26 @@ export class CrearEspectaculoComponent implements OnInit {
     this.imagenChanged = true;
     this.fileToUpload = files.item(0);
     console.info("Se añadio la imagen " + this.fileToUpload.name);
+  }
+
+  checkComerciosRepetidos(): boolean {
+    if (null == this.espectaculo.comercios || this.espectaculo.comercios.length < 1) {
+      return false;
+    }
+    let counter1, counter2: number;
+    counter1 = 0;
+    counter2 = 0;
+    for(let comercio of this.espectaculo.comercios) {
+      for(let comercio2 of this.espectaculo.comercios) {
+        if (comercio.nombre == comercio2.nombre && counter1 != counter2) {
+          return true;
+        }
+        counter2 = counter2 + 1;
+      }
+      counter1 = counter1 + 1;
+      counter2 = 0;
+    }
+    return false;
   }
 
   checkHoraFunciones(): boolean {
@@ -178,10 +223,16 @@ export class CrearEspectaculoComponent implements OnInit {
   }
 
   checkPrecio(): boolean {
+    if (null == this.espectaculo.comercios || this.espectaculo.comercios.length < 1) {
+      return false;
+    }
     for(let comercio of this.espectaculo.comercios) {
-      for(let producto of comercio.productos) {
-        if (producto.precio < 0) {
-          return true;
+      if (null == comercio.productos || comercio.productos.length < 1) {
+      } else {
+        for(let producto of comercio.productos) {
+          if (producto.precio < 0) {
+            return true;
+          }
         }
       }
     }
